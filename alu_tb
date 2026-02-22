@@ -1,4 +1,4 @@
-module ALU_tb;
+module alu_tb;
 
 parameter width = 4;
 
@@ -7,7 +7,7 @@ reg [width-1:0] A, B;
 reg [3:0] opcode;
 wire [2*width-1:0] result;
 
-ALU #(width) DUT (
+alu_pipelined #(width) DUT (
     .clk(clk),
     .reset(reset),
     .A(A),
@@ -16,7 +16,6 @@ ALU #(width) DUT (
     .result(result)
 );
 
-//////////////// Clock Generation ////////////////
 always #5 clk = ~clk;
 
 initial begin
