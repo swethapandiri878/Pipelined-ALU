@@ -1,0 +1,36 @@
+module ALU_tb;
+
+parameter width = 4;
+
+reg clk, reset;
+reg [width-1:0] A, B;
+reg [3:0] opcode;
+wire [2*width-1:0] result;
+
+ALU #(width) DUT (
+    .clk(clk),
+    .reset(reset),
+    .A(A),
+    .B(B),
+    .opcode(opcode),
+    .result(result)
+);
+
+//////////////// Clock Generation ////////////////
+always #5 clk = ~clk;
+
+initial begin
+    clk = 0;
+    reset = 1;
+    #10 reset = 0;
+     
+    A = 4'd5; B = 4'd3; opcode = 4'b0000; #10; // ADD
+    A = 4'd7; B = 4'd2; opcode = 4'b0001; #10; // SUB
+    A = 4'd6; B = 4'd2; opcode = 4'b0010; #10; // AND
+    A = 4'd6; B = 4'd2; opcode = 4'b0011; #10; // OR
+    A = 4'd4; B = 4'd3; opcode = 4'b0100; #10; // MUL
+
+    #20 $finish;
+end
+
+endmodule
